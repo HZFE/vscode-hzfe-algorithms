@@ -1,11 +1,11 @@
 {
-  "name": "do-something-right",
-  "displayName": "do-something-right",
-  "description": "Manjusaka 独家公益刷题插件",
-  "version": "0.0.8",
-  "publisher": "do-something-right",
+  "name": "vscode-hzfe-algorithms",
+  "displayName": "HZFE Algorithms",
+  "description": "HZFE 刷题用插件",
+  "version": "0.0.1",
+  "publisher": "hzfe",
   "repository": {
-    "url": "https://github.com/rottenpen/do-something-right"
+    "url": "https://github.com/HZFE/vscode-hzfe-algorithms"
   },
   "icon": "media/dosomethingright.png",
   "engines": {
