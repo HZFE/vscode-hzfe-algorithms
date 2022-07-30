@@ -77,5 +77,8 @@
   "dependencies": {
     "axios": "^0.24.0",
     "json-loader": "^0.5.7"
-  }
+  },
+  "extensionDependencies": [
+    "leetcode.vscode-leetcode"
+  ]
 }
