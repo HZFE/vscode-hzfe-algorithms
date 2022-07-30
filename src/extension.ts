@@ -1,27 +1,21 @@
 import * as vscode from 'vscode';
 import { codeLensController } from './codelen/CodeLensController';
 import { sync } from './command/sync';
-import getDaily from './command/getDaily';
-import createDailyStatusBar from './statusbar/createDailyStatusBar';
-let pending = false;
+import { config } from './command/config';
+// import getDaily from './command/getDaily';
+// import createDailyStatusBar from './statusbar/createDailyStatusBar';
+
+// let pending = false;
+
 export async function activate(context: vscode.ExtensionContext) {
-  let disposable = vscode.commands.registerCommand('do-something-right.sync', async rest => {
-    if (pending) {
-      vscode.window.showWarningMessage('正在同步...');
-      return;
-    }
-    pending = true;
-    try {
-      await sync(rest);
-      vscode.window.showInformationMessage('你已成功为公益事业 +1s!');
-    } catch (error) {
-      vscode.window.showErrorMessage((error as any).message);
-    }
-    pending = false;
-  });
-  let dailyCommand = vscode.commands.registerCommand('do-something-right.getDaily', getDaily);
-  context.subscriptions.push(disposable, codeLensController, dailyCommand);
-  context.subscriptions.push(await createDailyStatusBar());
+ const syncCommand = vscode.commands.registerCommand('hzfe-algorithms.sync', sync);
+  const configCommand = vscode.commands.registerCommand('hzfe-algorithms.config', config);
+
+  context.subscriptions.push(syncCommand, configCommand, codeLensController);
+
+  // let dailyCommand = vscode.commands.registerCommand('do-something-right.getDaily', getDaily);
+  // context.subscriptions.push(disposable, codeLensController, dailyCommand);
+  // context.subscriptions.push(await createDailyStatusBar());
 }
 
 export function deactivate() {}

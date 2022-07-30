@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { getRepoConfig } from "../shared/config";
 
 export class CustomCodeLensProvider implements vscode.CodeLensProvider {
   private onDidChangeCodeLensesEmitter: vscode.EventEmitter<
@@ -43,11 +44,13 @@ export class CustomCodeLensProvider implements vscode.CodeLensProvider {
     );
     const codeLens: vscode.CodeLens[] = [];
 
+    // const { repo } = repoConfig;
+    console.log({repoConfigrepoConfigrepoConfigrepoConfig:getRepoConfig()})
     if (shortcuts.indexOf("Sync") >= 0) {
       codeLens.push(
         new vscode.CodeLens(range, {
-          title: "同步公益",
-          command: "do-something-right.sync",
+          title: `Sync to Repo`,
+          command: 'hzfe-algorithms.sync',
           arguments: [document.uri],
         })
       );

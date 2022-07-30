@@ -1,5 +1,5 @@
 {
-  "name": "vscode-hzfe-algorithms",
+  "name": "hzfe-algorithms",
   "displayName": "HZFE Algorithms",
   "description": "HZFE 刷题用插件",
   "version": "0.0.1",
@@ -21,28 +21,31 @@
   "contributes": {
     "commands": [
       {
-        "command": "do-something-right.sync",
-        "title": "同步到公益项目",
-        "category": "LeetCode"
+        "command": "hzfe-algorithms.sync",
+        "title": "Sync to repo",
+        "category": "HZFE Algorithm"
       },
       {
-        "command": "do-something-right.getDaily",
-        "title": "获取每日一题 daily",
-        "category": "LeetCode"
+        "command": "hzfe-algorithms.config",
+        "title": "Config plugin",
+        "category": "HZFE Algorithm"
       }
     ],
-    "configuration": [
-      {
-        "title": "do-something-right",
-        "properties": {
-          "do-something-right.wechatId": {
-            "type": "string",
-            "scope": "application",
-            "description": "微信名"
-          }
+    "configuration": {
+      "title": "HZFE Algorithms",
+      "properties": {
+        "hzfe-algorithms.config.repo": {
+          "type": "string",
+          "scope": "application",
+          "description": "Config github repo URL (Required)"
+        },
+        "hzfe-algorithms.config.nickname": {
+          "type": "string",
+          "scope": "application",
+          "description": "Config nickname (Not Required)"
         }
       }
-    ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "yarn run package",
@@ -72,6 +75,7 @@
     "webpack-cli": "^4.4.0"
   },
   "dependencies": {
-    "axios": "^0.24.0"
+    "axios": "^0.24.0",
+    "json-loader": "^0.5.7"
   }
 }
