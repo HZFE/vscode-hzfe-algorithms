@@ -27,10 +27,6 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.json$/,
-        loader: 'json-loader'
-      },
-      {
         test: /\.ts$/,
         exclude: /node_modules/,
         use: [

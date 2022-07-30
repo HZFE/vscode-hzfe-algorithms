@@ -1,7 +1,7 @@
 {
   "name": "hzfe-algorithms",
   "displayName": "HZFE Algorithms",
-  "description": "HZFE 刷题用插件",
+  "description": "HZFE algorithms extension",
   "version": "0.0.1",
   "publisher": "hzfe",
   "repository": {
