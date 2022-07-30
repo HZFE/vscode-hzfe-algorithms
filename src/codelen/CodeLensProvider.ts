@@ -44,12 +44,12 @@ export class CustomCodeLensProvider implements vscode.CodeLensProvider {
     );
     const codeLens: vscode.CodeLens[] = [];
 
-    // const { repo } = repoConfig;
+    const { repo } = getRepoConfig();
     console.log({repoConfigrepoConfigrepoConfigrepoConfig:getRepoConfig()})
     if (shortcuts.indexOf("Sync") >= 0) {
       codeLens.push(
         new vscode.CodeLens(range, {
-          title: `Sync to Repo`,
+          title: `Sync to ${`[${repo}]` || 'Repo'}`,
           command: 'hzfe-algorithms.sync',
           arguments: [document.uri],
         })

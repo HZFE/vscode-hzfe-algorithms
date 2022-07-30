@@ -9,13 +9,7 @@ const http = axios.create({
   timeout: 10000,
 });
 
-const getLanguage = () => {
-  const config = vscode.workspace.getConfiguration('leetcode');
-  return config.get('defaultLanguage') || 'javascript';
-};
-
 export const sync = async (url: vscode.Uri) => {
-  console.log('configuration[config.repo]', configuration['config.repo']);
   if (!configuration['config.repo']) {
     await vscode.commands.executeCommand('hzfe-algorithms.config');
   }
@@ -48,17 +42,30 @@ ${code}
 ${configuration['config.nickname'] ? '> Nickname: ' + configuration['config.nickname'] : ''}
 > From vscode-hzfe-algorithms`;
 
-    const createComment = await http.post(
-      `/repos/${owner}/${repo}/issues/${number}/comments`,
-      {
-        body: tpl,
-      },
-      {
-        headers: {
-          Authorization: `token ${account.accessToken}`,
-        },
-      },
-    );
+    const loadingText = `Syncing to [${owner}/${repo}]`;
+    await vscode.window.withProgress({
+      location: vscode.ProgressLocation.Notification,
+      title: 'HZFE Algorithms',
+    }, async (progress, token) => {
+      let i = 0;
+      const update = setInterval(() => {
+        progress.report({ increment: i++ * 10, message: loadingText });
+      }, 200);
 
-    return createComment;
+      await http.post(
+        `/repos/${owner}/${repo}/issues/${number}/comments`,
+        {
+          body: tpl,
+        },
+        {
+          headers: {
+            Authorization: `token ${account.accessToken}`,
+          },
+        },
+      );
+
+      clearInterval(update);
+      progress.report({ increment: 100, message: 'successful' });
+      await new Promise((r) => setTimeout(r, 3e3));
+    });
 };

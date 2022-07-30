@@ -39,6 +39,6 @@ const config: TConfig = new Proxy(configuration, {
   }
 }) as any;
 
-export const getRepoConfig: () => { owner: string, repo: string } = () => /github.com[\/:](?<owner>[\w-]+)\/(?<repo>[\w-]+)/.exec(configuration['config.repo'])?.groups as any;
+export const getRepoConfig: () => { owner: string, repo: string } = () => /github.com[\/:](?<owner>[\w-]+)\/(?<repo>[\w-]+)/.exec(config['config.repo'])?.groups as any;
 
 export default config;
