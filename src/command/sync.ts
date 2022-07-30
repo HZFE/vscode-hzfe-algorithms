@@ -14,7 +14,8 @@ export const sync = async (url: vscode.Uri) => {
     await vscode.commands.executeCommand('hzfe-algorithms.config');
   }
 
-  const repoConfig = getRepoConfig();
+  const repoConfig = getRepoConfig() || {};
+  console.log({repoConfigrepoConfigrepoConfigrepoConfig: configuration['config.repo']});
   if (!repoConfig?.owner || !repoConfig?.repo) {
     return await vscode.window.showErrorMessage('Repo url is invalid.');
   }
@@ -32,9 +33,11 @@ export const sync = async (url: vscode.Uri) => {
   }
   const number = list[0].number;
   const code = fs.readFileSync(url.path).toString();
-  const codeGroups = /@lc app=leetcode id=(?<num>\d+) lang=(?<language>[^\n]+)/.exec(code)?.groups;
+  const codeGroups = /@lc app=leetcode(?<isCN>\.cn)? id=(?<num>\d+) lang=(?<language>[^\n]+)/.exec(code)?.groups;
+  const lcName = !code.includes('leetcode.cn') && (/\[\d+\] ([^\n]+)/.exec(code) || [])[1];
+  const lcLink = lcName && `https://leetcode.com/problems/${lcName.toLowerCase().replace(/\s/g, '-')}/`;
 
-  const tpl = `
+  const tpl = `${lcName ? `## [${codeGroups?.num ? `${codeGroups.num} ` : ''}${lcName}](${lcLink}) \n` : ''}
 \`\`\`${codeGroups?.language}
 ${code}
 \`\`\`

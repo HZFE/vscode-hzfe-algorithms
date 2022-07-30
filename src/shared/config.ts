@@ -16,8 +16,6 @@ Object.keys(props).forEach(key => {
   extentionConfig[key.split('.').slice(1).join('.') as TExtensionConfig] = (props as any)[key];
 });
 
-const configuration = workspace.getConfiguration(pkg.name);
-
 type TConfig = WorkspaceConfiguration
   & Record<TExtensionConfig, any>
   & {
@@ -28,17 +26,19 @@ type TConfig = WorkspaceConfiguration
       overrideInLanguage?: boolean
     ): Thenable<void>;
   };
-const config: TConfig = new Proxy(configuration, {
-  get (target, prop: string) {
-    if (configuration.get(prop)) {
-      return configuration.get(prop);
+const config: TConfig = new Proxy({}, {
+  get (_, prop: string) {
+    const c = workspace.getConfiguration(pkg.name);
+    if (c.get(prop)) {
+      return c.get(prop);
     }
 
     // @ts-ignore
-    return target[prop];
+    return c[prop];
   }
 }) as any;
 
-export const getRepoConfig: () => { owner: string, repo: string } = () => /github.com[\/:](?<owner>[\w-]+)\/(?<repo>[\w-]+)/.exec(config['config.repo'])?.groups as any;
+export const githubRepoReg = /github.com[\/:](?<owner>[\w-]+)\/(?<repo>[\w-]+)/;
+export const getRepoConfig: () => { owner: string, repo: string } = () => githubRepoReg.exec(config['config.repo'])?.groups as any;
 
 export default config;
