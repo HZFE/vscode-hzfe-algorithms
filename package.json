@@ -3,7 +3,7 @@
   "displayName": "HZFE Algorithms",
   "description": "HZFE algorithms extension",
   "version": "0.0.1",
-  "publisher": "hzfe",
+  "publisher": "gongpei",
   "repository": {
     "url": "https://github.com/HZFE/vscode-hzfe-algorithms"
   },
